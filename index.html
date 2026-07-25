@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原神牛逼</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{
+    background:linear-gradient(135deg,#e6f2ff,#ffffff);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+.box{
+    background:#ffffff;
+    border-radius:18px;
+    padding:45px 32px;
+    width:100%;
+    max-width:420px;
+    box-shadow: 0 6px 26px rgba(25, 118, 210, 0.12);
+}
+h1{
+    text-align:center;
+    color:#1565c0;
+    margin-bottom:32px;
+    font-size:26px;
+}
+#uidInput{
+    width:100%;
+    padding:15px 18px;
+    border:1px solid #b3d8ff;
+    border-radius:12px;
+    font-size:17px;
+    background:#f7fbff;
+    outline:none;
+    transition:0.2s;
+}
+#uidInput:focus{
+    border-color:#1976d2;
+}
+#submitBtn{
+    width:100%;
+    margin-top:18px;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#1976d2;
+    color:#fff;
+    font-size:17px;
+    cursor:pointer;
+}
+#submitBtn:active{
+    background:#0d47a1;
+}
+#msg{
+    text-align:center;
+    margin-top:20px;
+    font-size:16px;
+    height:24px;
+}
+.success{color:#238833;}
+.error{color:#c62828;}
+</style>
+</head>
+<body>
+<div class="box">
+    <h1>原神牛逼</h1>
+    <input id="uidInput" placeholder="UID检测">
+    <button id="submitBtn">开始验证</button>
+    <div id="msg"></div>
+</div>
+
+<script>
+const input = document.getElementById('uidInput');
+const btn = document.getElementById('submitBtn');
+const msgBox = document.getElementById('msg');
+const MIN = 100000000;
+const MAX = 192070000;
+const TARGET_URL = "https://ys.mihoyo.com/main/m/?af_adset=1&utm_source=yuanshen_web";
+
+function checkUID(){
+    let val = input.value.trim();
+    // 判断严格9位纯数字
+    if(!/^\d{9}$/.test(val)){
+        msgBox.className = "error";
+        msgBox.innerText = "验证失败，请重新输入";
+        return;
+    }
+    const num = Number(val);
+    if(num > MIN && num < MAX){
+        msgBox.className = "success";
+        msgBox.innerText = "验证成功";
+        setTimeout(()=>{
+            location.href = TARGET_URL;
+        },2000);
+    }else{
+        msgBox.className = "error";
+        msgBox.innerText = "验证失败，请重新输入";
+    }
+}
+btn.onclick = checkUID;
+input.onkeydown = e=>e.key==="Enter"&&checkUID();
+</script>
+</body>
+</html>
